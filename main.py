@@ -1,7 +1,6 @@
 import tkinter
-from tkinter import ttk
-
-import click
+from mos_15F_task_list import mos_15F
+from mos_15N_task_list import mos_15N
 
 window = tkinter.Tk()
 window.title("DA Form 5164-R")
@@ -11,9 +10,24 @@ frame.pack(padx=20, pady=10)
 
 rank_options = ["PVT", "PV2", "PFC", "SPC", "SGT", "SSG", "SFC"]
 mos_options = ["15F", "15N"]
-task_list_15F = ["15F--1", "15F--2"]
-task_list_15N = ["15N--1", "15N--2"]
+task_list_15F = []
+task_list_15N = []
 task_list_output = ("Click on the Button", ("That says Update Task List"))
+
+
+def update_15F_and_15N_task_list():
+    for task in mos_15F:
+        new_task =f"{task[0]} --- {task[1]}"
+        task_list_15F.append(new_task)
+        print(task)
+    for task in mos_15N:
+        new_task = f"{task[0]} --- {task[1]}"
+        task_list_15N.append(new_task)
+        print(task)
+
+
+update_15F_and_15N_task_list()
+
 
 clicked = tkinter.StringVar()
 clicked.set("15F")
@@ -48,7 +62,7 @@ combo.grid(row=3, column=1)
 task_list_label = tkinter.Label(frame, text="Select Task")
 task_list_label.grid(row=4, column=0)
 task_list_combo = tkinter.OptionMenu(frame, clicked_task, *task_list_output)
-task_list_combo.grid(row=4, column=1)
+task_list_combo.grid(row=4, column=1, columnspan=2, sticky="news")
 
 
 def update_tasklist():
