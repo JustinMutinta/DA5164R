@@ -88,6 +88,23 @@ update_tasklist_button = tkinter.Button(frame, text = "Update Task List", comman
 update_tasklist_button.grid(row=3, column=2)
 
 
+def find_task(mos, task_number):
+    if mos == "15F":
+        for task in mos_15F:
+            if task_number in task:
+                return task
+                break
+            else:
+                pass
+    else:
+        for task in mos_15N:
+            if task_number in task:
+                return task
+                break
+            else:
+                pass
+
+
 def print_form():
     rank = clicked_rank.get()
     last_name = last_name_entry.get().upper()
@@ -95,11 +112,14 @@ def print_form():
     task = clicked_task.get()
     task_number = task[0:12]
     task_name = task[17:]
+    mos = clicked.get()
 
-    print(task_list_15F.index(task_number, 1, len(mos_15F)))
+    # print(find_task(mos, task_number))
+    # task_to_print = find_task(mos, task_number)
+    # print(len(task_to_print))
 
-    # new_form = Form_creator(rank, last_name, first_name, task_number)
-    # new_form.pdf_creator()
+    new_form = Form_creator(rank, last_name, first_name, mos, task_number)
+    new_form.pdf_creator()
     #
     # last_name_entry.delete(0, tkinter.END)
     # first_name_entry.delete(0, tkinter.END)

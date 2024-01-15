@@ -1,5 +1,7 @@
 import PyPDF2
 from datetime import datetime, date
+from mos_15F_task_list import mos_15F
+from mos_15N_task_list import mos_15N
 
 # reader = PyPDF2.PdfReader("template/DA5164_R.pdf")
 # fields = reader.get_form_text_fields()
@@ -7,11 +9,28 @@ from datetime import datetime, date
 
 class Form_creator:
 
-    def __init__(self, rank, last_name, first_name, task_number):
+    def __init__(self, rank, last_name, first_name, mos, task_number):
         self.rank = rank
         self.last_name = last_name
         self.first_name = first_name
+        self.mos = mos
         self.task_number = task_number
+
+    def find_task(self):
+        if self.mos == "15F":
+            for task in mos_15F:
+                if self.task_number in task:
+                    return task
+                    break
+                else:
+                    pass
+        else:
+            for task in mos_15N:
+                if self.task_number in task:
+                    return task
+                    break
+                else:
+                    pass
 
 
     def pdf_creator(self):
@@ -27,10 +46,15 @@ class Form_creator:
         writer.add_page(page)
         soldier_info = f"{self.rank} {self.last_name} {self.first_name}"
 
+        task_to_be_printed = self.find_task()
+
+
         writer.update_page_form_field_values(
             writer.pages[0], {
                 'TASKNUM[0]': self.task_number,
-                'SOLDIER[0]': soldier_info
+                'TASKTITLE[0]': task_to_be_printed[1],
+                'SOLDIER[0]': soldier_info,
+                'TITLE_B[0]': task_to_be_printed[4]
             }
         )
 
