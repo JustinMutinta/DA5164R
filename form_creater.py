@@ -14,8 +14,9 @@ class Form_creator:
 
     def pdf_creator(self):
         now = datetime.now()
-        dateTime_string = now.strftime("%m-%d-%Y_%H:%M:%S")
-        date_string = now.date()
+        dateTime_string = now.strftime("%m-%d-%Y_%H-%M-%S")
+        # current_time = now.time()
+        # date_string = now.date()
 
         reader = PyPDF2.PdfReader("template/DA5164_R.pdf")
         writer = PyPDF2.PdfWriter()
@@ -24,7 +25,7 @@ class Form_creator:
         writer.add_page(page)
 
         try:
-            pdf_output = f"outputs/Soldier-One_{dateTime_string}_DA5164_R.pdf"
+            pdf_output = f"outputs\Soldier-One_{dateTime_string}_DA5164_R.pdf"
             with open(pdf_output, "wb") as output_stream:
                 writer.write(output_stream)
         except Exception as e:

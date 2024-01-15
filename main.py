@@ -1,6 +1,7 @@
 import tkinter
 from mos_15F_task_list import mos_15F
 from mos_15N_task_list import mos_15N
+from form_creater import Form_creator
 
 window = tkinter.Tk()
 window.title("DA Form 5164-R")
@@ -93,9 +94,11 @@ def print_form():
     first_name = first_name_entry.get().upper()
     task = clicked_task.get()
 
+    new_form = Form_creator(last_name, task)
+    new_form.pdf_creator()
+
     last_name_entry.delete(0, tkinter.END)
     first_name_entry.delete(0, tkinter.END)
-
 
 
     print(rank, last_name, first_name, task)
