@@ -7,8 +7,10 @@ from datetime import datetime, date
 
 class Form_creator:
 
-    def __init__(self, name, task_number):
-        self.name = name
+    def __init__(self, rank, last_name, first_name, task_number):
+        self.rank = rank
+        self.last_name = last_name
+        self.first_name = first_name
         self.task_number = task_number
 
 
@@ -23,9 +25,17 @@ class Form_creator:
 
         page = reader.pages[0]
         writer.add_page(page)
+        soldier_info = f"{self.rank} {self.last_name} {self.first_name}"
+
+        writer.update_page_form_field_values(
+            writer.pages[0], {
+                'TASKNUM[0]': self.task_number,
+                'SOLDIER[0]': soldier_info
+            }
+        )
 
         try:
-            pdf_output = f"outputs\Soldier-One_{dateTime_string}_DA5164_R.pdf"
+            pdf_output = f"outputs\{self.rank}_{self.last_name}_{self.first_name}_{self.task_number}_{dateTime_string}_DA5164_R.pdf"
             with open(pdf_output, "wb") as output_stream:
                 writer.write(output_stream)
         except Exception as e:
