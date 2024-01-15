@@ -19,11 +19,11 @@ def update_15F_and_15N_task_list():
     for task in mos_15F:
         new_task =f"{task[0]} --- {task[1]}"
         task_list_15F.append(new_task)
-        print(task)
+        # print(task)
     for task in mos_15N:
         new_task = f"{task[0]} --- {task[1]}"
         task_list_15N.append(new_task)
-        print(task)
+        # print(task)
 
 
 update_15F_and_15N_task_list()
@@ -73,14 +73,14 @@ def update_tasklist():
 
         for tasks in task_list_15F:
             task_list_combo['menu'].add_command(label=tasks, command=tkinter._setit(clicked_task, tasks))
-        print(task_list_15F)
+        # print(task_list_15F)
     else:
         clicked_task.set('')
         task_list_combo['menu'].delete(0, 'end')
 
         for tasks in task_list_15N:
             task_list_combo['menu'].add_command(label=tasks, command=tkinter._setit(clicked_task, tasks))
-        print(task_list_15N)
+        # print(task_list_15N)
 
 
 update_tasklist_button = tkinter.Button(frame, text = "Update Task List", command=update_tasklist)
@@ -88,9 +88,20 @@ update_tasklist_button.grid(row=3, column=2)
 
 
 def print_form():
-    pass
+    rank = clicked_rank.get()
+    last_name = last_name_entry.get().upper()
+    first_name = first_name_entry.get().upper()
+    task = clicked_task.get()
 
-print_button = tkinter.Button(frame, text="Print form")
+    last_name_entry.delete(0, tkinter.END)
+    first_name_entry.delete(0, tkinter.END)
+
+
+
+    print(rank, last_name, first_name, task)
+
+
+print_button = tkinter.Button(frame, text="Print form", command=print_form)
 print_button.grid(row=5, column=0, columnspan=3, sticky="news", padx=20, pady=5)
 
 
