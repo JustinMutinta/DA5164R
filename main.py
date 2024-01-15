@@ -96,8 +96,10 @@ def print_form():
     task_number = task[0:12]
     task_name = task[17:]
 
-    new_form = Form_creator(rank, last_name, first_name, task_number)
-    new_form.pdf_creator()
+    print(task_list_15F.index(task_number, 1, len(mos_15F)))
+
+    # new_form = Form_creator(rank, last_name, first_name, task_number)
+    # new_form.pdf_creator()
     #
     # last_name_entry.delete(0, tkinter.END)
     # first_name_entry.delete(0, tkinter.END)
@@ -105,7 +107,7 @@ def print_form():
     #
     # print(rank, last_name, first_name, task)
 
-    print(task_number, task_name)
+    # print(task_number, task_name)
 
 
 print_button = tkinter.Button(frame, text="Print form", command=print_form)
