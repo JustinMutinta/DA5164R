@@ -32,31 +32,42 @@ class Form_creator:
                 else:
                     pass
 
+    def task_items_to_be_printed(self):
+        counter = 65
+        task_items = self.find_task()
+        task_to_be_printed = self.find_task()
+        soldier_info = f"{self.rank} {self.last_name}, {self.first_name}"
+        output_text = {}
+        output_text.update({'TASKNUM[0]': self.task_number, 'TASKTITLE[0]': task_to_be_printed[1], 'SOLDIER[0]': soldier_info,})
+
+        while counter < 79:
+            task_counter = 2
+            for task in task_items[2:]:
+                # output_text += f"TITLE_{chr(counter)}: {task}"
+                # output_text.update({f"TITLE_{chr(counter)}[0]: {task[2]}"})
+                new_title = f"TITLE_{chr(counter)}[0]"
+                output_text[new_title] = task
+                task_counter += 1
+                counter += 1
+
+        return output_text
+
 
     def pdf_creator(self):
         now = datetime.now()
         dateTime_string = now.strftime("%m-%d-%Y_%H-%M-%S")
-        # current_time = now.time()
-        # date_string = now.date()
 
         reader = PyPDF2.PdfReader("template/DA5164_R.pdf")
         writer = PyPDF2.PdfWriter()
 
         page = reader.pages[0]
         writer.add_page(page)
-        soldier_info = f"{self.rank} {self.last_name} {self.first_name}"
 
         task_to_be_printed = self.find_task()
+        individual_tasks = self.task_items_to_be_printed()
 
 
-        writer.update_page_form_field_values(
-            writer.pages[0], {
-                'TASKNUM[0]': self.task_number,
-                'TASKTITLE[0]': task_to_be_printed[1],
-                'SOLDIER[0]': soldier_info,
-                'TITLE_B[0]': task_to_be_printed[4]
-            }
-        )
+        writer.update_page_form_field_values(writer.pages[0], self.task_items_to_be_printed())
 
         try:
             pdf_output = f"outputs\{self.rank}_{self.last_name}_{self.first_name}_{self.task_number}_{dateTime_string}_DA5164_R.pdf"
